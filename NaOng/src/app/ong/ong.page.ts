@@ -9,18 +9,12 @@ import { NavController } from '@ionic/angular';
 export class OngPage implements OnInit {
   nome: string = '';
   email: string = '';
-<<<<<<< HEAD
   datafundacao: string = '';
   cnpj: string = '';
   endereco:string = '';
   bairro: string = '';
   cidade: string = '';  
 
-=======
-  cnpj: string = '';
-  setor: number = 0;
-  
->>>>>>> 8530118c504e6bbded89dfc559c90eb88e97f74b
   constructor(private navCtrl: NavController) { }
 
   formatarCnpj() {
