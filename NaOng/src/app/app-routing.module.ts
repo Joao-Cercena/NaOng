@@ -11,6 +11,27 @@ const routes: Routes = [
     redirectTo: 'home',
     pathMatch: 'full'
   },
+  {
+    path: 'teste3',
+    loadChildren: () => import('./teste3/teste3.module').then( m => m.Teste3PageModule)
+  },
+  {
+    path: 'doador',
+    loadChildren: () => import('./doador/doador.module').then( m => m.DoadorPageModule)
+  },
+  {
+    path: 'teste3',
+    loadChildren: () => import('./teste3/teste3.module').then( m => m.Teste3PageModule)
+  },  {
+    path: 'ong',
+    loadChildren: () => import('./ong/ong.module').then( m => m.OngPageModule)
+  },
+  {
+    path: 'setor',
+    loadChildren: () => import('./setor/setor.module').then( m => m.SetorPageModule)
+  },
+
+
 ];
 
 @NgModule({

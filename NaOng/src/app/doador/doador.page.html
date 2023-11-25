@@ -1,0 +1,36 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Doador</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-list>
+    <ion-list>
+      <ion-item>
+        <ion-label position="floating">Nome</ion-label>
+        <ion-input type="text" [(ngModel)]="nome"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">CPF</ion-label><!-- botar mascaras-->
+        <ion-input type="email" [(ngModel)]="cpf"></ion-input>
+      </ion-item>
+      
+      <ion-item>
+        <ion-label position="floating">Email</ion-label>
+        <ion-input type="email" [(ngModel)]="email"></ion-input>
+      </ion-item>
+  
+      <ion-item>
+        <ion-label position="floating">Data Nascimento</ion-label>
+        <ion-input type="text" [(ngModel)]="dataNascimento"></ion-input>
+      </ion-item>
+    </ion-list>
+
+
+  </ion-list>
+
+  <ion-button >Cadastrar</ion-button> <!-- VER PRA SALVAR -->
+  <ion-button (click)="showHome()">Home</ion-button>
+</ion-content>
