@@ -7,7 +7,11 @@ import { NavController } from '@ionic/angular';
   styleUrls: ['./ong.page.scss'],
 })
 export class OngPage implements OnInit {
-
+  nome: string = '';
+  email: string = '';
+  cnpj: string = '';
+  setor: number = 0;
+  
   constructor(private navCtrl: NavController) { }
 
   ngOnInit() {
