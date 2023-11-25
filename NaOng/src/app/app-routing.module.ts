@@ -30,6 +30,10 @@ const routes: Routes = [
     path: 'setor',
     loadChildren: () => import('./setor/setor.module').then( m => m.SetorPageModule)
   },
+  {
+    path: 'login',
+    loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
+  },
 
 
 ];

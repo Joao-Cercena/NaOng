@@ -13,8 +13,8 @@
       </ion-item>
 
       <ion-item>
-        <ion-label position="floating">CPF</ion-label><!-- botar mascaras-->
-        <ion-input type="email" [(ngModel)]="cpf"></ion-input>
+        <ion-label position="floating">CPF</ion-label>
+        <ion-input type="text" [(ngModel)]="cpf" (ionChange)="formatarCPF()" maxlength="14"></ion-input>
       </ion-item>
       
       <ion-item>
