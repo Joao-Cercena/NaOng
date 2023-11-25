@@ -8,7 +8,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'login',
     pathMatch: 'full'
   },
   {
@@ -22,13 +22,18 @@ const routes: Routes = [
   {
     path: 'teste3',
     loadChildren: () => import('./teste3/teste3.module').then( m => m.Teste3PageModule)
-  },  {
+  },
+  {
     path: 'ong',
     loadChildren: () => import('./ong/ong.module').then( m => m.OngPageModule)
   },
   {
     path: 'setor',
     loadChildren: () => import('./setor/setor.module').then( m => m.SetorPageModule)
+  },
+  {
+    path: 'login',
+    loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
   },
 
 

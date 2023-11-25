@@ -7,6 +7,7 @@ import { NavController } from '@ionic/angular';
   styleUrls: ['./setor.page.scss'],
 })
 export class SetorPage implements OnInit {
+  nome: String = '';
 
   constructor(private navCtrl: NavController) { }
 
@@ -14,5 +15,9 @@ export class SetorPage implements OnInit {
   }
   showHome(){
     this.navCtrl.navigateBack('home')
+  }
+
+  cadastrar() {
+    console.log('Nome:', this.nome);
   }
 }
