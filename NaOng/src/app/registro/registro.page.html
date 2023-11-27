@@ -1,0 +1,42 @@
+<ion-header [translucent]="true"> 
+  <ion-toolbar>
+    <ion-title>Registro</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <ion-list>
+
+    <ion-item>
+      <ion-label position="floating">ONG</ion-label>
+      <ion-select [(ngModel)]="listOng">
+        <ion-select-option *ngFor="let ong of listOng" [value]="ong.value" expand="full">{{ong.nome}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+  
+    <ion-item>
+      <ion-label position="floating">Descrição</ion-label>
+      <ion-input type="text" [(ngModel)]="descricao"></ion-input>
+    </ion-item>
+    
+    <ion-item>
+      <ion-label position="floating">Setor</ion-label>
+      <ion-input type="text" [(ngModel)]="setor"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Data</ion-label>
+      <ion-input type="datetime-local" [(ngModel)]="data"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Valor</ion-label>
+      <ion-input type="number" step="any" min="0.01" [(ngModel)]="valor" ></ion-input>
+    </ion-item>
+
+  </ion-list>
+
+  <ion-button (click) = "cadastrar()">Cadastrar</ion-button> <!-- VER PRA SALVAR -->
+  <ion-button (click)="showHome()">Home</ion-button>
+</ion-content>

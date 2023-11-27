@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { OngPageRoutingModule } from './ong-routing.module';
 
 import { OngPage } from './ong.page';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    OngPageRoutingModule
+    OngPageRoutingModule,
+    HttpClientModule
   ],
   declarations: [OngPage]
 })

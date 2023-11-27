@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { DoadorPageRoutingModule } from './doador-routing.module';
 
 import { DoadorPage } from './doador.page';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    DoadorPageRoutingModule
+    DoadorPageRoutingModule,
+    HttpClientModule
   ],
   declarations: [DoadorPage]
 })

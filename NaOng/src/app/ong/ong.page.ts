@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
+import { HttpClient } from '@angular/common/http';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-ong',
@@ -9,13 +11,17 @@ import { NavController } from '@ionic/angular';
 export class OngPage implements OnInit {
   nome: string = '';
   email: string = '';
-  datafundacao: string = '';
   cnpj: string = '';
-  endereco:string = '';
-  bairro: string = '';
-  cidade: string = '';  
+  endereco: string = '';
+  pedido: string = '';
+  idRecebido: any;
 
-  constructor(private navCtrl: NavController) { }
+  constructor(private http: HttpClient, private navCtrl: NavController, private activatedRoute: ActivatedRoute, private router: Router) {
+    this.activatedRoute.queryParams.subscribe(params => {
+      this.idRecebido = params['id'];
+      console.log(this.idRecebido);
+    });
+  }
 
   formatarCnpj() {
     // Remove caracteres não numéricos do cnpj
@@ -30,18 +36,29 @@ export class OngPage implements OnInit {
 
   ngOnInit() {
   }
-  showHome(){
+  showHome() {
     this.navCtrl.navigateBack('home')
   }
 
   cadastrar() {
-    console.log('Nome:', this.nome);
-    console.log('Email:', this.cnpj);
-    console.log('Email:', this.email);
-    console.log('Idade:', this.datafundacao);
-    console.log('endereco:', this.endereco);
-    console.log('Bairro:', this.bairro);
-    console.log('Cidade:', this.cidade);
+    const novoOng = {
+      nome: this.nome,
+      email: this.email,
+      cnpj: this.cnpj.replace(/\D/g, ''), // Remove caracteres não numéricos do CPF
+      endereco: this.endereco,
+      pedido: this.pedido,
+    };
+
+    // Envia os dados para o servidor JSON
+    this.http.post('http://localhost:3000/ong', novoOng).subscribe(
+      (data) => {
+        console.log('Ong cadastrado com sucesso:', data);
+        this.navCtrl.navigateBack('home'); // Redireciona para a página 'home' após o cadastro
+      },
+      (error) => {
+        console.error('Erro ao cadastrar Ong:', error);
+      }
+    );
   }
 }
 

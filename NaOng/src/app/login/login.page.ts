@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { NavController } from '@ionic/angular';
 
-@Component({
+@Component({ 
   selector: 'app-login',
   templateUrl: 'login.page.html',
   styleUrls: ['login.page.scss'],
@@ -9,18 +11,33 @@ import { Router } from '@angular/router';
 export class LoginPage {
   username: string = '';
   password: string = '';
+  id: number = 0;
 
-  constructor(private router: Router) {}
-
+  constructor(private navCtrl: NavController, private router: Router, private http: HttpClient, private activatedRoute:ActivatedRoute) {}
+ 
   login() {
-    // Verifica se as credenciais estão corretas (simulação)
-    if (this.username === 'usuario' && this.password === 'senha') {
-      // Caso correto, redireciona para a próxima página
-      this.router.navigate(['/outra-pagina']);
-    } else {
-      // Caso contrário, exibe uma mensagem de erro (pode ser um alert, toast, etc.)
-      console.log('Credenciais inválidas');
-    }
+    // Faz a solicitação HTTP para buscar os usuários
+    this.http.get<any>('http://localhost:3000/doador').subscribe(
+      (data) => {
+        // Verifica se as credenciais correspondem a algum usuário
+        const foundUser = data.find((user: any) => {
+          return user.cpf === this.username && user.senha === this.password;
+        });
+
+        if (foundUser) {
+          // Navigate with query params using ActivatedRoute
+          this.router.navigate(['home'], {
+            queryParams: { id: foundUser.id },
+            relativeTo: this.activatedRoute.parent // Ensure the correct navigation context
+          });
+        } else {
+          console.log('Credenciais inválidas');
+        }
+      },
+      (error) => {
+        // Tratamento de erro caso a solicitação não seja bem-sucedida
+        console.error('Erro ao buscar usuários:', error);
+      }
+    );
   }
 }
-

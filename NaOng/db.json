@@ -1,0 +1,104 @@
+{
+  "usuario": [
+    {
+      "username": "bruno",
+      "password": "123"
+    },
+    {
+      "username": "joao",
+      "password": "123"
+    }
+  ],
+  "doador": [
+    {
+      "id": 1,
+      "nome": "bruno",
+      "cpf": "10399991905",
+      "Email": "teste@email.com",
+      "dataNascimento": "20010405",
+      "senha": "123",
+      "mestre": 1 
+    },
+    {
+      "nome": "teste",
+      "cpf": "10399991906",
+      "email": "dgfsd",
+      "dataNascimento": "2001-04-05",
+      "senha": "123",
+      "id": 2
+    },
+    {
+      "id": 3
+    }
+  ],
+  "setor": [
+    {
+      "nome": "limpeza",
+      "id": 1
+    },
+    {
+      "nome": "comida",
+      "id": 2
+    }
+  ],
+  "ong": [
+    {
+      "nome": "asilo",
+      "email": "teste@email.com",
+      "cnpj": "01056896000150",
+      "endereco": "rua geral",
+      "pedido": "comidas em geral(não perecível)",
+      "id": 1
+    },
+    {
+      "nome": "criança esperança",
+      "email": "sdghdfgb",
+      "cnpj": "151764276267642",
+      "endereco": "sdggdf",
+      "pedido": "gsdghdfh",
+      "id": 2
+    }
+  ],
+  "registro": [
+    {
+      "id_ong": 1,
+      "id_doador": 1,
+      "descricao": "doação de 10 kilos de arroz",
+      "setor": "comida",
+      "data": "2023-06-01 09:59:59",
+      "id": 1
+    },
+    {
+      "ong": 0,
+      "id_doador": 1,
+      "descricao": "teste doação",
+      "setor": "comida",
+      "data": "2023-04-05",
+      "id": 2
+    },
+    {
+      "ong": 0,
+      "id_doador": "1",
+      "descricao": "veio",
+      "setor": "teste",
+      "data": "20001-04-05",
+      "id": 5
+    },
+    {
+      "ong": 0,
+      "descricao": "teste",
+      "setor": "aegsd",
+      "data": "2023-04-05T12:00",
+      "valor": 2.5,
+      "id": 6
+    },
+    {
+      "ong": 0,
+      "descricao": "dsad",
+      "setor": "sdda",
+      "data": "2026-06-12T12:00",
+      "valor": 8.69,
+      "id": 7
+    }
+  ]
+}

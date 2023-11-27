@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from '@ionic/angular';
+import { ActivatedRoute, Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-home',
@@ -7,21 +9,63 @@ import { NavController } from '@ionic/angular';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
+  idRecebido: any;
+  mestre: any;
+  listOng: any = [];
 
-  constructor(
-    private navCtrl: NavController
-    ) {}
+  constructor(private navCtrl: NavController, private activatedRoute: ActivatedRoute, private router: Router, private http: HttpClient,) {
+    this.activatedRoute.queryParams.subscribe(params => {
+      this.idRecebido = params['id'];
+      console.log(this.idRecebido);
+    });
+    this.http.get<any>('http://localhost:3000/doador').subscribe(
+      (data) => {
+        // Verifica se as credenciais correspondem a algum usuário
+        const foundUser = data.find((user: any) => {
+          return user.id == this.idRecebido;
+        });
+        this.mestre = foundUser.mestre;
+      },
+      (error) => {
+        // Tratamento de erro caso a solicitação não seja bem-sucedida
+        console.error('Erro ao buscar usuários:', error);
+      }
+    );
+  };
 
 
   showDoador() {
-    this.navCtrl.navigateForward('doador')
+    this.router.navigate(['doador'], {
+      queryParams: { id: this.idRecebido },
+      relativeTo: this.activatedRoute.parent
+    });
   }
   showOng() {
-    this.navCtrl.navigateForward('ong')
+    this.router.navigate(['ong'], {
+      queryParams: { id: this.idRecebido },
+      relativeTo: this.activatedRoute.parent
+    });
   }
-  showSetor() {
-    this.navCtrl.navigateForward('setor')
+  showRegistro() {
+    this.router.navigate(['registro'], {
+      queryParams: { id: this.idRecebido },
+      relativeTo: this.activatedRoute.parent
+    });
   }
 
-
+  ionViewWillEnter() {
+    this.listar();
+  }
+  
+  listar() {
+    // Envia os dados para o servidor JSON
+    this.http.get('http://localhost:3000/ong').subscribe(
+      (data) => {
+        this.listOng = data;
+      },
+      (error) => {
+        console.error('Erro ao buscar ong:', error);
+      }
+    );
+  }
 }

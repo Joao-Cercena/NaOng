@@ -4,33 +4,60 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-list>
+<ion-content [fullscreen]="true"> 
     <ion-list>
-      <ion-item>
-        <ion-label position="floating">Nome</ion-label>
-        <ion-input type="text" [(ngModel)]="nome"></ion-input>
-      </ion-item>
+      <ion-list>
+        <ion-item>
+          <ion-label position="floating">Nome</ion-label>
+          <ion-input type="text" [(ngModel)]="nome"></ion-input>
+        </ion-item>
 
-      <ion-item>
-        <ion-label position="floating">CPF</ion-label>
-        <ion-input type="text" [(ngModel)]="cpf" (ionChange)="formatarCPF()" maxlength="14"></ion-input>
-      </ion-item>
-      
-      <ion-item>
-        <ion-label position="floating">Email</ion-label>
-        <ion-input type="email" [(ngModel)]="email"></ion-input>
-      </ion-item>
-  
-      <ion-item>
-        <ion-label position="floating">Data Nascimento</ion-label>
-        <ion-input type="date" [(ngModel)]="dataNascimento"></ion-input>
-      </ion-item>
-    </ion-list>
+        <ion-item>
+          <ion-label position="floating">CPF</ion-label>
+          <ion-input type="text" [(ngModel)]="cpf" (ionChange)="formatarCPF()" maxlength="14"></ion-input>
+        </ion-item>
+        
+        <ion-item>
+          <ion-label position="floating">Email</ion-label>
+          <ion-input type="email" [(ngModel)]="email"></ion-input>
+        </ion-item>
+    
+        <ion-item>
+          <ion-label position="floating">Data Nascimento</ion-label>
+          <ion-input type="date" [(ngModel)]="dataNascimento"></ion-input>
+        </ion-item>
 
+        <ion-item>
+          <ion-label position="floating">Senha</ion-label>
+          <ion-input type="passoword" [(ngModel)]="senha"></ion-input>
+        </ion-item>
 
-  </ion-list>
+        </ion-list>
+      </ion-list>
 
-  <ion-button >Cadastrar</ion-button> <!-- VER PRA SALVAR -->
+    <ion-button (click) = "cadastrar()">Cadastrar</ion-button>
+    <div *ngIf = "mestre"> 
+      <br><br>    
+      <ion-title>
+        Lista de Doadores
+      </ion-title>
+      <ion-list>
+        <ion-item *ngFor="let doador of listDoador">
+          <ion-label style = "border: 1px solid blue">
+            Código: {{ doador.id }}
+            <br>
+            Nome: {{ doador.nome }}
+            <br>
+            CPF: {{ doador.cpf }}
+            <br>
+            Pedido: {{ doador.pedido }}
+            <br>
+            Email: {{ doador.email }}
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </div>
+
   <ion-button (click)="showHome()">Home</ion-button>
+  
 </ion-content>

@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { SetorPageRoutingModule } from './setor-routing.module';
 
 import { SetorPage } from './setor.page';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    SetorPageRoutingModule
+    SetorPageRoutingModule,
+    HttpClientModule
   ],
   declarations: [SetorPage]
 })
