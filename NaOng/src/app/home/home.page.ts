@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -13,10 +14,9 @@ export class HomePage {
   mestre: any;
   listOng: any = [];
 
-  constructor(private navCtrl: NavController, private activatedRoute: ActivatedRoute, private router: Router, private http: HttpClient,) {
+  constructor(private navCtrl: NavController, private activatedRoute: ActivatedRoute, private router: Router, private http: HttpClient, public alertController: AlertController) {
     this.activatedRoute.queryParams.subscribe(params => {
       this.idRecebido = params['id'];
-      console.log(this.idRecebido);
     });
     this.http.get<any>('http://localhost:3000/doador').subscribe(
       (data) => {
@@ -56,7 +56,32 @@ export class HomePage {
   ionViewWillEnter() {
     this.listar();
   }
-  
+
+  delete(ongExcluir: any) {
+    this.http.delete(`http://localhost:3000/ong/${ongExcluir}`).subscribe(
+      (data) => {
+        console.log('Ong excluido com sucesso:', data);
+        this.alertController.create({
+          header: 'AVISO!',
+          message: 'Ong excluida',
+          buttons: ['OK']
+        }).then(alert => { // Add a then() block to chain the promise
+          alert.present(); // Call the present() method inside the then() block
+        });
+      },
+      (error) => {
+        console.error('Erro ao excluir Ong:', error);
+      }
+    );
+  }
+
+  editaOng(valor: any) {
+    this.router.navigate(['ong'], {
+      queryParams: { id: this.idRecebido, idOng: valor },
+      relativeTo: this.activatedRoute.parent
+    });
+  }
+
   listar() {
     // Envia os dados para o servidor JSON
     this.http.get('http://localhost:3000/ong').subscribe(

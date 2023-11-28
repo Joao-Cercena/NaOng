@@ -8,18 +8,35 @@
 
 <ion-content [fullscreen]="true">
   <ion-button (click)="showDoador()">Doador</ion-button>
-  <div *ngIf = "mestre">
+  <div *ngIf="mestre">
     <ion-button (click)="showOng()">Ong</ion-button>
   </div>
-    <ion-button (click)="showRegistro()">Registro</ion-button>
+  <ion-button (click)="showRegistro()">Registro</ion-button>
 
-    <br><br>    
-    <ion-title>
-      Lista de ONGs
-    </ion-title>
-    <ion-list>
+  <br><br>
+  <ion-title>
+    Lista de ONGs
+  </ion-title>
+  <ion-list *ngIf="mestre">
+
+    <ion-item  *ngFor="let ong of listOng" (click)="editaOng(ong.id)">
+      <ion-label style="border: 1px solid blue">
+        Código: {{ ong.id }}
+        <br>
+        Nome: {{ ong.nome }}
+        <br>
+        Endereço: {{ ong.endereco }}
+        <br>
+        Pedido: {{ ong.pedido }}
+        <br>
+        <ion-button (click) = "delete(ong.id)">Excluir</ion-button>
+        <br>
+      </ion-label>-
+    </ion-item>
+  </ion-list>
+    <ion-list *ngIf="!mestre">  
       <ion-item *ngFor="let ong of listOng">
-        <ion-label style = "border: 1px solid blue">
+        <ion-label style="border: 1px solid blue">
           Código: {{ ong.id }}
           <br>
           Nome: {{ ong.nome }}
@@ -27,8 +44,9 @@
           Endereço: {{ ong.endereco }}
           <br>
           Pedido: {{ ong.pedido }}
+          <br>
         </ion-label>
       </ion-item>
-    </ion-list>
-  
+  </ion-list>
+
 </ion-content>

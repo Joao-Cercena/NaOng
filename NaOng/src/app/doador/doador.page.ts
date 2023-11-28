@@ -18,12 +18,27 @@ export class DoadorPage {
   listDoador: any = [];
   idRecebido: any;
   mestre: any;
+  mestreNovo: string = "";
 
   constructor(private http: HttpClient, private navCtrl: NavController, private activatedRoute: ActivatedRoute, private router: Router) {
     this.activatedRoute.queryParams.subscribe(params => {
       this.idRecebido = params['id'];
       console.log(this.idRecebido);
-    });
+      this.http.get<any>(`http://localhost:3000/doador?id=${this.idRecebido}`).subscribe(
+        (dados) => {
+          console.log(dados)
+          this.nome = dados[0].nome;
+          this.email = dados[0].email;
+          this.dataNascimento = dados[0].dataNascimento;
+          this.cpf = dados[0].cpf;
+          this.senha = dados[0].senha;
+        },
+        (error) => {
+          console.error('Erro ao buscar registro:', error);
+        }
+      );
+    }
+    );
     this.http.get<any>('http://localhost:3000/doador').subscribe(
       (data) => {
         // Verifica se as credenciais correspondem a algum usuário
@@ -45,7 +60,10 @@ export class DoadorPage {
   }
 
   showHome() {
-    this.navCtrl.navigateBack('home')
+    this.router.navigate(['home'], {
+      queryParams: { id: this.idRecebido },
+      relativeTo: this.activatedRoute.parent
+    });
   }
 
   ionViewWillEnter() {
@@ -63,6 +81,20 @@ export class DoadorPage {
       }
     );
   }
+  
+  delete(doadorExcluir: any) {
+    if (doadorExcluir != 1) {
+      this.http.delete(`http://localhost:3000/doador/${doadorExcluir}`).subscribe(
+        (data) => {
+          console.log('Doador excluido com sucesso:', data);
+          this.showHome();
+        },
+        (error) => {
+          console.error('Erro ao excluir doador:', error);
+        }
+      );
+    }
+  }
 
   cadastrar() {
     const novoDoador = {
@@ -71,17 +103,33 @@ export class DoadorPage {
       email: this.email,
       dataNascimento: this.dataNascimento,
       senha: this.senha,
+      mestre: this.mestreNovo,
     };
 
-    // Envia os dados para o servidor JSON
-    this.http.post('http://localhost:3000/doador', novoDoador).subscribe(
-      (data) => {
-        console.log('Doador cadastrado com sucesso:', data);
-        this.navCtrl.navigateBack('home'); // Redireciona para a página 'home' após o cadastro
-      },
-      (error) => {
-        console.error('Erro ao cadastrar doador:', error);
-      }
-    );
+    if (this.idRecebido < 1) {
+      // Se idRecebido for menor que 1, cadastra um novo doador
+      this.http.post('http://localhost:3000/doador', novoDoador).subscribe(
+        (data) => {
+          console.log('Doador cadastrado com sucesso:', data);
+          this.navCtrl.navigateBack('login'); // Redireciona para a página 'home' após o cadastro
+        },
+        (error) => {
+          console.error('Erro ao cadastrar doador:', error);
+        }
+      );
+    } else {
+      // Se idRecebido for maior ou igual a 1, faz um PUT para atualizar o doador
+      this.http.put(`http://localhost:3000/doador/${this.idRecebido}`, novoDoador).subscribe(
+        (data) => {
+          console.log('Doador atualizado com sucesso:', data);
+          //this.navCtrl.navigateBack('home'); // Redireciona para a página 'home' após a atualização
+          this.showHome();
+        },
+        (error) => {
+          console.error('Erro ao atualizar doador:', error);
+        }
+      );
+    }
   }
+
 }

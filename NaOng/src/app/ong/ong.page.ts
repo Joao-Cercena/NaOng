@@ -15,12 +15,31 @@ export class OngPage implements OnInit {
   endereco: string = '';
   pedido: string = '';
   idRecebido: any;
+  idOng: any;
 
   constructor(private http: HttpClient, private navCtrl: NavController, private activatedRoute: ActivatedRoute, private router: Router) {
     this.activatedRoute.queryParams.subscribe(params => {
       this.idRecebido = params['id'];
-      console.log(this.idRecebido);
-    });
+      this.idOng = params['idOng'];
+      console.log(this.idOng);
+      if (params['idOng']) {
+        this.idOng = params['idOng'];
+
+        this.http.get<any>(`http://localhost:3000/ong?id=${this.idOng}`).subscribe(
+          (dados) => {
+            console.log(dados)
+            this.nome = dados[0].nome;
+            this.email = dados[0].email;
+            this.cnpj = dados[0].cnpj;
+            this.endereco = dados[0].endereco;
+            this.pedido = dados[0].pedido;
+          },
+          (error) => {
+            console.error('Erro ao buscar registro:', error);
+          }
+        );
+      }
+    })
   }
 
   formatarCnpj() {
@@ -37,28 +56,45 @@ export class OngPage implements OnInit {
   ngOnInit() {
   }
   showHome() {
-    this.navCtrl.navigateBack('home')
+    this.router.navigate(['home'], {
+      queryParams: { id: this.idRecebido },
+      relativeTo: this.activatedRoute.parent
+    });
   }
 
   cadastrar() {
     const novoOng = {
       nome: this.nome,
       email: this.email,
-      cnpj: this.cnpj.replace(/\D/g, ''), // Remove caracteres não numéricos do CPF
+      cnpj: this.cnpj.replace(/\D/g, ''), // Remove caracteres não numéricos do CNPJ
       endereco: this.endereco,
       pedido: this.pedido,
     };
-
-    // Envia os dados para o servidor JSON
-    this.http.post('http://localhost:3000/ong', novoOng).subscribe(
-      (data) => {
-        console.log('Ong cadastrado com sucesso:', data);
-        this.navCtrl.navigateBack('home'); // Redireciona para a página 'home' após o cadastro
-      },
-      (error) => {
-        console.error('Erro ao cadastrar Ong:', error);
-      }
-    );
+  
+    if (this.idOng < 1 || !this.idOng ) {
+      // Se idRecebido for menor que 1, cadastra uma nova ONG
+      this.http.post('http://localhost:3000/ong', novoOng).subscribe(
+        (data) => {
+          console.log('Ong cadastrada com sucesso:', data);
+          this.navCtrl.navigateBack('home'); // Redireciona para a página 'home' após o cadastro
+        },
+        (error) => {
+          console.error('Erro ao cadastrar Ong:', error);
+        }
+      );
+    } else {
+      // Se idRecebido for maior ou igual a 1, faz um PUT para atualizar a ONG
+      this.http.put(`http://localhost:3000/ong/${this.idOng}`, novoOng).subscribe(
+        (data) => {
+          console.log('Ong atualizada com sucesso:', data);
+          this.navCtrl.navigateBack('home'); // Redireciona para a página 'home' após a atualização
+        },
+        (error) => {
+          console.error('Erro ao atualizar Ong:', error);
+        }
+      );
+    }
   }
+  
 }
 

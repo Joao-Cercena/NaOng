@@ -12,6 +12,7 @@ export class LoginPage {
   username: string = '';
   password: string = '';
   id: number = 0;
+  showUserNotFoundError: boolean = false;
 
   constructor(private navCtrl: NavController, private router: Router, private http: HttpClient, private activatedRoute:ActivatedRoute) {}
  
@@ -32,12 +33,25 @@ export class LoginPage {
           });
         } else {
           console.log('Credenciais inválidas');
+          this.showUserNotFoundError = true; // Ativa a mensagem de erro
         }
       },
       (error) => {
         // Tratamento de erro caso a solicitação não seja bem-sucedida
         console.error('Erro ao buscar usuários:', error);
+        this.showUserNotFoundError = true; // Ativa a mensagem de erro
       }
     );
   }
+  loginNovo() {
+      // Navigate to 'doador' with id as 0
+      this.router.navigate(['doador'], {
+        queryParams: { id: 0 }
+      });
+  }
+    
+
 }
+
+
+
