@@ -82,7 +82,7 @@ export class DoadorPage {
       }
     );
   }
-  
+
   deletar(doadorExcluir: any) {
     if (doadorExcluir != 1) {
       this.http.delete(`http://localhost:3000/doador/${doadorExcluir}`).subscribe(
@@ -116,30 +116,41 @@ export class DoadorPage {
       });
     } else {
 
-    if (this.idRecebido < 1) {
-      // Se idRecebido for menor que 1, cadastra um novo doador
-      this.http.post('http://localhost:3000/doador', novoDoador).subscribe(
-        (data) => {
-          console.log('Doador cadastrado com sucesso:', data);
-          this.navCtrl.navigateBack('login'); // Redireciona para a página 'home' após o cadastro
-        },
-        (error) => {
-          console.error('Erro ao cadastrar doador:', error);
+      if (this.idRecebido < 1) {
+        // Se idRecebido for menor que 1, cadastra um novo doador
+        this.http.post('http://localhost:3000/doador', novoDoador).subscribe(
+          (data) => {
+            console.log('Doador cadastrado com sucesso:', data);
+            this.navCtrl.navigateBack('login'); // Redireciona para a página 'home' após o cadastro
+          },
+          (error) => {
+            console.error('Erro ao cadastrar doador:', error);
+          }
+        );
+      } else {
+        if (this.idRecebido < 1) { //para deixar proibido atualizar usuario 1
+          // Se idRecebido for maior ou igual a 1, faz um PUT para atualizar o doador
+          this.http.put(`http://localhost:3000/doador/${this.idRecebido}`, novoDoador).subscribe(
+            (data) => {
+              console.log('Doador atualizado com sucesso:', data);
+              //this.navCtrl.navigateBack('home'); // Redireciona para a página 'home' após a atualização
+              this.showHome();
+            },
+            (error) => {
+              console.error('Erro ao atualizar doador:', error);
+            }
+          );
+        } else {
+          this.alertController.create({
+            header: 'AVISO!',
+            message: 'Não é possível atualizar o doador 1!',
+            buttons: ['OK']
+          }).then(alert => {
+            alert.present();
+          });
+
         }
-      );
-    } else {
-      // Se idRecebido for maior ou igual a 1, faz um PUT para atualizar o doador
-      this.http.put(`http://localhost:3000/doador/${this.idRecebido}`, novoDoador).subscribe(
-        (data) => {
-          console.log('Doador atualizado com sucesso:', data);
-          //this.navCtrl.navigateBack('home'); // Redireciona para a página 'home' após a atualização
-          this.showHome();
-        },
-        (error) => {
-          console.error('Erro ao atualizar doador:', error);
-        }
-      );
+      }
     }
-  }
   }
 }

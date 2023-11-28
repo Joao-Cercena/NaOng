@@ -11,13 +11,13 @@
   ],
   "doador": [
     {
-      "id": 1,
-      "nome": "bruno",
+      "nome": "usuario mestre",
       "cpf": "10399991905",
-      "Email": "teste@email.com",
-      "dataNascimento": "20010405",
+      "email": "mestre@gmail.com",
+      "dataNascimento": "1999-01-01",
       "senha": "123",
-      "mestre": 1 
+      "mestre": "1",
+      "id": 1
     },
     {
       "nome": "teste",
@@ -26,9 +26,6 @@
       "dataNascimento": "2001-04-05",
       "senha": "123",
       "id": 2
-    },
-    {
-      "id": 3
     }
   ],
   "setor": [
@@ -57,6 +54,15 @@
       "endereco": "sdggdf",
       "pedido": "gsdghdfh",
       "id": 2
+    },
+    {
+      "nome": "teste ong",
+      "email": "teste@email.",
+      "cnpj": "25632547789652",
+      "endereco": "gdsg",
+      "pedido": "arroz",
+      "status": true,
+      "id": 3
     }
   ],
   "registro": [
