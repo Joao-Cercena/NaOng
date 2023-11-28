@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { NavController } from '@ionic/angular';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-doador',
@@ -20,7 +21,7 @@ export class DoadorPage {
   mestre: any;
   mestreNovo: string = "";
 
-  constructor(private http: HttpClient, private navCtrl: NavController, private activatedRoute: ActivatedRoute, private router: Router) {
+  constructor(private http: HttpClient, private navCtrl: NavController, private activatedRoute: ActivatedRoute, private router: Router, public alertController: AlertController) {
     this.activatedRoute.queryParams.subscribe(params => {
       this.idRecebido = params['id'];
       console.log(this.idRecebido);
@@ -82,7 +83,7 @@ export class DoadorPage {
     );
   }
   
-  delete(doadorExcluir: any) {
+  deletar(doadorExcluir: any) {
     if (doadorExcluir != 1) {
       this.http.delete(`http://localhost:3000/doador/${doadorExcluir}`).subscribe(
         (data) => {
@@ -105,6 +106,15 @@ export class DoadorPage {
       senha: this.senha,
       mestre: this.mestreNovo,
     };
+    if (!this.nome || !this.cpf || !this.email || !this.dataNascimento || !this.senha) {
+      this.alertController.create({
+        header: 'AVISO!',
+        message: 'Digite todos os campos!',
+        buttons: ['OK']
+      }).then(alert => {
+        alert.present();
+      });
+    } else {
 
     if (this.idRecebido < 1) {
       // Se idRecebido for menor que 1, cadastra um novo doador
@@ -131,5 +141,5 @@ export class DoadorPage {
       );
     }
   }
-
+  }
 }

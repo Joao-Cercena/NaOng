@@ -35,9 +35,12 @@
         </ion-list>
       </ion-list>
 
-    <ion-button (click) = "cadastrar()">Cadastrar</ion-button>
-    <ion-button (click)="showHome()">Home</ion-button>
-    
+    <ion-button (click)="cadastrar()"><ion-icon name="add-circle"></ion-icon> Cadastrar</ion-button> 
+
+    <div *ngIf="idRecebido > 0">
+       <ion-button (click)="showHome()"><ion-icon name="home"></ion-icon> Home</ion-button>
+    </div>
+
     <div *ngIf = "mestre"> 
       <br><br>    
       <ion-title>
@@ -56,7 +59,7 @@
             <br>
             Email: {{ doador.email }}
             <br>
-            <ion-button (click) = "delete(doador.id)">Excluir</ion-button>
+            <ion-button (click)="deletar(doador.id)"><ion-icon name="trash"></ion-icon> Deletar</ion-button> 
           </ion-label>
         </ion-item>
       </ion-list>
