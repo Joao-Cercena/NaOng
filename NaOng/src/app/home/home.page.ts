@@ -84,7 +84,7 @@ export class HomePage {
 
   listar() {
     // Envia os dados para o servidor JSON
-    this.http.get('http://localhost:3000/ong').subscribe(
+    this.http.get('http://localhost:3000/ong?status=true').subscribe(
       (data) => {
         this.listOng = data;
       },
