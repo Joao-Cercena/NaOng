@@ -32,12 +32,16 @@
         <ion-input type="text" [(ngModel)]="pedido"></ion-input>
       </ion-item>
 
+      <ion-item>
+        <ion-label>Ativar/Desativar</ion-label>
+        <ion-toggle [(ngModel)]="status"></ion-toggle>
+      </ion-item>
 
     </ion-list>
 
 
   </ion-list>
 
-  <ion-button (click) = "cadastrar()">Cadastrar</ion-button>
-  <ion-button (click)="showHome()">Home</ion-button>
+  <ion-button (click) = "cadastrar()"><ion-icon name="add-circle"></ion-icon> Cadastrar</ion-button>
+  <ion-button (click)="showHome()"><ion-icon name="home"></ion-icon> Home</ion-button>
 </ion-content>

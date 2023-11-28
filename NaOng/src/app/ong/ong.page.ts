@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-ong',
@@ -16,8 +17,9 @@ export class OngPage implements OnInit {
   pedido: string = '';
   idRecebido: any;
   idOng: any;
+  status: boolean = true;
 
-  constructor(private http: HttpClient, private navCtrl: NavController, private activatedRoute: ActivatedRoute, private router: Router) {
+  constructor(private http: HttpClient, public alertController: AlertController, private navCtrl: NavController, private activatedRoute: ActivatedRoute, private router: Router) {
     this.activatedRoute.queryParams.subscribe(params => {
       this.idRecebido = params['id'];
       this.idOng = params['idOng'];
@@ -33,6 +35,7 @@ export class OngPage implements OnInit {
             this.cnpj = dados[0].cnpj;
             this.endereco = dados[0].endereco;
             this.pedido = dados[0].pedido;
+            this.status = dados[0].status;
           },
           (error) => {
             console.error('Erro ao buscar registro:', error);
@@ -69,32 +72,43 @@ export class OngPage implements OnInit {
       cnpj: this.cnpj.replace(/\D/g, ''), // Remove caracteres não numéricos do CNPJ
       endereco: this.endereco,
       pedido: this.pedido,
+      status: this.status,
     };
-  
-    if (this.idOng < 1 || !this.idOng ) {
-      // Se idRecebido for menor que 1, cadastra uma nova ONG
-      this.http.post('http://localhost:3000/ong', novoOng).subscribe(
-        (data) => {
-          console.log('Ong cadastrada com sucesso:', data);
-          this.navCtrl.navigateBack('home'); // Redireciona para a página 'home' após o cadastro
-        },
-        (error) => {
-          console.error('Erro ao cadastrar Ong:', error);
-        }
-      );
+
+    if (!this.nome || !this.email || !this.cnpj || !this.endereco || !this.pedido) {
+      this.alertController.create({
+        header: 'AVISO!',
+        message: 'Digite todos os campos!',
+        buttons: ['OK']
+      }).then(alert => {
+        alert.present();
+      });
     } else {
-      // Se idRecebido for maior ou igual a 1, faz um PUT para atualizar a ONG
-      this.http.put(`http://localhost:3000/ong/${this.idOng}`, novoOng).subscribe(
-        (data) => {
-          console.log('Ong atualizada com sucesso:', data);
-          this.navCtrl.navigateBack('home'); // Redireciona para a página 'home' após a atualização
-        },
-        (error) => {
-          console.error('Erro ao atualizar Ong:', error);
-        }
-      );
+      if (this.idOng < 1 || !this.idOng) {
+        // Se idRecebido for menor que 1, cadastra uma nova ONG
+        this.http.post('http://localhost:3000/ong', novoOng).subscribe(
+          (data) => {
+            console.log('Ong cadastrada com sucesso:', data);
+            this.showHome();
+          },
+          (error) => {
+            console.error('Erro ao cadastrar Ong:', error);
+          }
+        );
+      } else {
+        // Se idRecebido for maior ou igual a 1, faz um PUT para atualizar a ONG
+        this.http.put(`http://localhost:3000/ong/${this.idOng}`, novoOng).subscribe(
+          (data) => {
+            console.log('Ong atualizada com sucesso:', data);
+            this.showHome();
+          },
+          (error) => {
+            console.error('Erro ao atualizar Ong:', error);
+          }
+        );
+      }
     }
   }
-  
+
 }
 
