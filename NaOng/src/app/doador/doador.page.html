@@ -35,11 +35,24 @@
         </ion-list>
       </ion-list>
 
-    <ion-button (click)="cadastrar()"><ion-icon name="add-circle"></ion-icon> Cadastrar</ion-button> 
 
-    <div *ngIf="idRecebido > 0">
-       <ion-button (click)="showHome()"><ion-icon name="home"></ion-icon> Home</ion-button>
-    </div>
+    <ion-grid>
+      <ion-row align-items-center> <!-- Alinha os itens verticalmente -->
+        <ion-col size="auto">
+          <ion-button (click)="cadastrar()">
+            <ion-icon slot="start" name="add-circle"></ion-icon>
+            Cadastrar
+          </ion-button>
+        </ion-col>
+        <ion-col size="auto" *ngIf="idRecebido > 0">
+          <ion-button (click)="showHome()">
+            <ion-icon slot="start" name="home"></ion-icon>
+            Home
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
 
     <div *ngIf = "mestre"> 
       <br><br>    

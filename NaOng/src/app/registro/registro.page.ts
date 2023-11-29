@@ -100,8 +100,8 @@ export class RegistroPage {
         this.http.put(`http://localhost:3000/registro/${this.id_registro}`, novoRegistro).subscribe(
           (data) => {
             this.alertController.create({
-              header: 'CADASTRADO!',
-              message: 'Cadastrado com sucesso!',
+              header: 'ATUALIZADO!',
+              message: 'Registro atualizado com sucesso!',
               buttons: ['OK']
             }).then(alert => {
               alert.present();

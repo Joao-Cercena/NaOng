@@ -49,8 +49,8 @@
   <br><br>
   <ion-list>
     <ion-item *ngFor="let registro of listRegistro" (click)="editaRegistro(registro.id)">
-     
-      <ion-label style="border: 1px solid blue">
+      
+      <ion-label style="border: 1px solid blue; white-space: normal;      word-wrap: break-word;">
         Código: {{ registro.id }}
         <br>
         Descrição: {{ registro.descricao }}

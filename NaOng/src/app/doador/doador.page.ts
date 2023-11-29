@@ -37,7 +37,7 @@ export class DoadorPage {
         (error) => {
           console.error('Erro ao buscar registro:', error);
         }
-      );
+      );//teste
     }
     );
     this.http.get<any>('http://localhost:3000/doador').subscribe(
@@ -128,7 +128,7 @@ export class DoadorPage {
           }
         );
       } else {
-        if (this.idRecebido < 1) { //para deixar proibido atualizar usuario 1
+        if (this.idRecebido != 1) { //para deixar proibido atualizar usuario 1
           // Se idRecebido for maior ou igual a 1, faz um PUT para atualizar o doador
           this.http.put(`http://localhost:3000/doador/${this.idRecebido}`, novoDoador).subscribe(
             (data) => {
