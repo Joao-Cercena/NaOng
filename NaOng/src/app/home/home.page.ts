@@ -84,13 +84,24 @@ export class HomePage {
 
   listar() {
     // Envia os dados para o servidor JSON
-    this.http.get('http://localhost:3000/ong?status=true').subscribe(
-      (data) => {
-        this.listOng = data;
-      },
-      (error) => {
-        console.error('Erro ao buscar ong:', error);
-      }
-    );
+    if (this.mestre) {
+      this.http.get('http://localhost:3000/ong').subscribe(
+        (data) => {
+          this.listOng = data;
+        },
+        (error) => {
+          console.error('Erro ao buscar ong:', error);
+        }
+      );
+    } else {
+      this.http.get('http://localhost:3000/ong?status=true').subscribe(
+        (data) => {
+          this.listOng = data;
+        },
+        (error) => {
+          console.error('Erro ao buscar ong:', error);
+        }
+      );
+    }
   }
 }
